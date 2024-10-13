@@ -1,0 +1,10 @@
+API
+
+CRUD:
+/users
+/compact-disks
+/authors
+/genres
+
+Other:
+/make-order
