@@ -1,0 +1,23 @@
+Users
+id, email, password
+
+CompactDisks
+id, author, title, genre, year, price
+
+Authors
+id, name, biography
+
+Genres
+id, title
+
+Orders
+id, userId, totalPrice
+
+OrderDetails
+id, orderId, compactDiscId, quantity
+
+Users - Orders(One to Many)
+Order - OrderDetails (One to Many)
+OrderDetails - CompactDisks (One to Many)
+Genres - CompactDisks (Many to Many)
+Authors - CompactDisks (One to Many)
