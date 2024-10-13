@@ -7,4 +7,11 @@ CRUD:
 /genres
 
 Other:
-/make-order
+Make an Order
+(POST) /make-order
+
+Get Orders for an User
+(GET) /userOrders/:userId
+
+Get CDs by a Genre
+(GET) /cds-by-genre/:genreId
