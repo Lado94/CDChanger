@@ -18,7 +18,7 @@ OrderDetail.belongsTo(Order, { foreignKey: 'orderId' });
 OrderDetail.belongsTo(CompactDisk, { foreignKey: 'cdId' });
 
 CompactDisk.belongsToMany(Genre, { through: "CDGenres" });
-Genre.belongsToMany(CompactDisk, { through: "CDGenres" });
+Genre.belongsToMany(CompactDisk, { through: "CDGenres", as: "CompactDisks" });
 
 const createDB = async () => {
     try {

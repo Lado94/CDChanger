@@ -11,6 +11,9 @@ const { errorLogger } = require("./services/errorHandler");
 const { createUser } = require("./controllers/users");
 
 const { createDB } = require("./models/index");
+const initializeAssociations = require("./models/index");
+const orderRoutes = require("./routes/Orders");
+const orderDetailRoutes = require("./routes/order-details");
 
 const app = express();
 
@@ -26,6 +29,8 @@ app.use(
 app.use(helmet());
 app.post("/login", createToken);
 app.post("/create-user", createUser);
+app.use("/orders", orderRoutes);
+app.use("/orderDetails", orderDetailRoutes);
 
 app.use(checkToken);
 
@@ -39,6 +44,8 @@ const main = async() => {
   const RESET = "\x1b[0m";
 
   await createDB();
+
+ initializeAssociations();
 
   app.listen(PORT, () => {
     console.log(`${RESET}Server is running on port ${PORT}`);
