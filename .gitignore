@@ -1,8 +1,19 @@
-node_modules/   # Папка с зависимостями Node.js
-.env             # Файл с конфиденциальной информацией (если есть)
-*.log            # Лог-файлы
-dist/            # Папка с скомпилированными файлами
-build/           # Папка с собранными файлами
-.DS_Store        # Системный файл для macOS
+# Node.js dependency directories
+node_modules/
 
+# dotenv environment variable files
+.env
+
+# Logs
+*.log
+
+# Build/dist output
+dist/
+build/
+
+# System files     
+.DS_Store
+
+#idea files
+.idea 
 
