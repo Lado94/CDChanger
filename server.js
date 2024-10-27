@@ -6,13 +6,16 @@ require("dotenv").config();
 
 const { createToken, checkToken } = require("./services/authentication");
 const usersRouter = require("./routes/users");
+const artistsRouter = require("./routes/artists");
+const genresRouter = require("./routes/genres");
+const compactDisksRouter = require("./routes/compact-disks");
+const ordersRouter = require("./routes/orders");
 
 const { errorLogger } = require("./services/errorHandler");
 const { createUser } = require("./controllers/users");
 
 const { createDB } = require("./models/index");
-const initializeAssociations = require("./models/index");
-const orderRoutes = require("./routes/Orders");
+const orderRoutes = require("./routes/orders");
 const orderDetailRoutes = require("./routes/order-details");
 
 const app = express();
@@ -35,6 +38,9 @@ app.use("/orderDetails", orderDetailRoutes);
 app.use(checkToken);
 
 app.use("/users", usersRouter);
+app.use("/artists", artistsRouter);
+app.use("/genres", genresRouter);
+app.use("/compact-disks", compactDisksRouter);
 
 app.use(errorLogger);
 
@@ -44,8 +50,6 @@ const main = async() => {
   const RESET = "\x1b[0m";
 
   await createDB();
-
- initializeAssociations();
 
   app.listen(PORT, () => {
     console.log(`${RESET}Server is running on port ${PORT}`);

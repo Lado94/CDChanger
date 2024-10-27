@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const genreController = require('../controllers/Genres');
+const genresController = require('../controllers/genres');
 
 
-router.post('/', genreController.createGenre);
-router.get('/', genreController.getAllGenres);
-router.get('/:id', genreController.getGenreById);
-router.put('/:id', genreController.updateGenre);
-router.delete('/:id', genreController.deleteGenre);
+router.post('/', genresController.createGenre);
+router.get('/', genresController.getAllGenres);
+router.get('/:id', genresController.getGenreById);
+router.put('/:id', genresController.updateGenre);
+router.delete('/:id', genresController.deleteGenre);
 
 module.exports = router;

@@ -8,9 +8,7 @@ const OrderDetail = sequelize.define(
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          min: {
-            args: 0,
-          },
+          min: 0,
         },
       },
   },

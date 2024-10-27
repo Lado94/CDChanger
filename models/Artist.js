@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db/db");
 
-const Author = sequelize.define(
-  "Author",
+const Artist = sequelize.define(
+  "Artist",
   {
     name: {
       type: DataTypes.STRING,
@@ -10,10 +10,6 @@ const Author = sequelize.define(
       len: {
         args: [1, 30],
         msg: "Name must be between 1 and 30 characters long",
-      },
-      is: {
-        args: /^[A-Za-z\s]{1,30}$/,
-        msg: "Name can only contain letters",
       },
     },
     biography: {
@@ -23,10 +19,6 @@ const Author = sequelize.define(
         args: [10, 200],
         msg: "Biography must be between 10 and 200 characters long",
       },
-      is: {
-        args: /^[A-Za-z\s]{10,200}$/,
-        msg: "Biography can only contain letters",
-      },
     },
   },
   {
@@ -34,4 +26,4 @@ const Author = sequelize.define(
   }
 );
 
-module.exports = Author;
+module.exports = Artist;

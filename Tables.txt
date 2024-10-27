@@ -2,7 +2,7 @@ Users
 id, email, password
 
 CompactDisks
-id, authorId, title, genreId, year, price, count
+id, authorId, title, genreId, year, price, stars
 
 Authors
 id, name, biography

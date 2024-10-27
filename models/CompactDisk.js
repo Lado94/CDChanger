@@ -9,41 +9,29 @@ const CompactDisk = sequelize.define(
       allowNull: false,
       len: {
         args: [1, 30],
-        msg: "Name must be between 1 and 30 characters long",
-      },
-      is: {
-        args: /^[A-Za-z\s]{1,30}$/,
-        msg: "Name can only contain letters",
+        msg: "Title must be between 1 and 30 characters long",
       },
     },
     year: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        min: {
-          args: 1800,
-        },
-        max: {
-          args: new Date(),
-        },
+        min: 1800
       },
     },
     price: {
       type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
-        min: {
-          args: 0,
-        },
+        min: 0,
       },
     },
-    count: {
+    stars: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        min: {
-          args: 0,
-        },
+        min: 0,
+        max: 5
       },
     },
   },
