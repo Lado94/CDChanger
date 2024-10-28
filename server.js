@@ -10,13 +10,13 @@ const artistsRouter = require("./routes/artists");
 const genresRouter = require("./routes/genres");
 const compactDisksRouter = require("./routes/compact-disks");
 const ordersRouter = require("./routes/orders");
+const orderDetailsRouter = require("./routes/order-details");
+
 
 const { errorLogger } = require("./services/errorHandler");
 const { createUser } = require("./controllers/users");
 
 const { createDB } = require("./models/index");
-const orderRoutes = require("./routes/orders");
-const orderDetailRoutes = require("./routes/order-details");
 
 const app = express();
 
@@ -32,8 +32,6 @@ app.use(
 app.use(helmet());
 app.post("/login", createToken);
 app.post("/create-user", createUser);
-app.use("/orders", orderRoutes);
-app.use("/orderDetails", orderDetailRoutes);
 
 app.use(checkToken);
 
@@ -41,6 +39,8 @@ app.use("/users", usersRouter);
 app.use("/artists", artistsRouter);
 app.use("/genres", genresRouter);
 app.use("/compact-disks", compactDisksRouter);
+app.use("/orders", ordersRouter);
+app.use("/orderDetails", orderDetailsRouter);
 
 app.use(errorLogger);
 

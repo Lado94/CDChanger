@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const orderDetailController = require("../controllers/order-details");
+const orderDetailsController = require("../controllers/order-details");
 
-router.post("/", orderDetailController.createOrderDetail);
-router.get("/:id", orderDetailController.getOrderDetailById);
-router.delete("/:id", orderDetailController.deleteOrderDetail);
+router.post("/", orderDetailsController.createOrderDetail);
+router.get("/:id", orderDetailsController.getOrderDetailById);
+router.delete("/:id", orderDetailsController.deleteOrderDetail);
 
 module.exports = router;
