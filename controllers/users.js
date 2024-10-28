@@ -58,7 +58,7 @@ const getUser = async (req, res, next) => {
   }
 };
 
-const updatUser = async (req, res, next) => {
+const updateUser = async (req, res, next) => {
   try {
     const id = req.params.id;
     const { name, email, password } = req.body;
@@ -94,7 +94,7 @@ const delUser = async (req, res, next) => {
 module.exports = {
   getUser,
   getAllUsers,
-  updatUser,
+  updateUser,
   delUser,
   createUser,
 };

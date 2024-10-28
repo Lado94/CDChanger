@@ -1,11 +1,10 @@
 const CompactDisk = require("../models/CompactDisk");
 const Genre = require("../models/Genre");
 const Artist = require("../models/Artist");
-``;
+
 exports.createCompactDisk = async (req, res) => {
   try {
-    const { title, year, price, stars, artistId, genreId } = req.body;
-    console.log(1);
+    const { title, year, price, stars, artistId, genres } = req.body;
     const newCompactDisk = await CompactDisk.create({
       title,
       year,
@@ -13,13 +12,16 @@ exports.createCompactDisk = async (req, res) => {
       stars,
       ArtistId: artistId,
     });
-    if (genreId) {
-      newCompactDisk.addGenre(genreId);
+    if (genres) {
+      if (Array.isArray(genres)) {
+        genres.forEach((genreId) => {
+          newCompactDisk.addGenre(genreId);
+        });
+      }
     }
     res.status(201).json(newCompactDisk);
   } catch (error) {
-    console.log(2);
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -63,7 +65,7 @@ exports.updateCompactDisk = async (req, res) => {
     await compactDisk.save();
     res.status(200).json(compactDisk);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -91,12 +93,12 @@ exports.getCDsByGenre = async (req, res) => {
         model: CompactDisk,
         attributes: ["title", "year", "price", "stars"],
         include: [
-            {
-                model: Artist,
-                attributes: ["name"]
-            },
+          {
+            model: Artist,
+            attributes: ["name"],
+          },
         ],
-        through: { attributes: [] }
+        through: { attributes: [] },
       },
     });
 

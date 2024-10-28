@@ -1,17 +1,23 @@
 API
 
+Auth:
+/create-user
+/login
+
 CRUD:
 /users
 /compact-disks
 /authors
 /genres
+/orders
+
 
 Other:
 Make an Order
 (POST) /make-order
 
 Get Orders for an User
-(GET) /userOrders/:userId
+(GET) /user-orders/:userId
 
 Get CDs by a Genre
 (GET) /cds-by-genre/:genreId
