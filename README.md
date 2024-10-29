@@ -1,4 +1,4 @@
-# Compact Disk Marketplace API
+# Compact Disk Marketplace API (CDChanger)
 
 This project is a RESTful API for a Compact Disk (CD) Marketplace application. It supports functionalities for managing artists, genres, CDs, orders, and users. The API is built using Node.js and Express, with Sequelize as the ORM.
 
@@ -21,7 +21,7 @@ This project is a RESTful API for a Compact Disk (CD) Marketplace application. I
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/cd-marketplace.git
+   git clone https://github.com/Lado94/CDChanger.git
    ```
 2. Install dependencies:
    ```bash
