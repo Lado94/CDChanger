@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CDChanger</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="login">
+        <div class="login-input">
+          <label for="email">Email:</label>
+          <input type="text" id="email" class="user-input" />
+          <label for="password">Password:</label>
+          <input type="password" id="password" class="user-input" />
+          <button id="login-btn">Login</button>
+        </div>
+        <div class="user-info">
+          <div class="user-text">User`s name: <span id="user-name"></span></div>
+        </div>
+      </div>
+      <!-- <div class="make-order">
+        <div class="make-order-title">Make an order:</div>
+        <div class="order-input">
+          <label for="cd-select">Choose a CD:</label>
+          <select name="cds" id="cd-select">
+            <option value="">--Please choose a CD--</option>
+          </select>
+          <label for="order-quantity">Quantity:</label>
+          <input type="number" class="order-quantity" id="order-quantity">
+        </div>
+      </div> -->
+      <div class="user-orders" id="user-orders"></div>
+    </div>
+    <script src="script.js" ;></script>
+  </body>
+</html>

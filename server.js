@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 require("dotenv").config();
 
-const { createToken, checkToken } = require("./services/authentication");
+const { createToken, checkToken, delToken } = require("./services/authentication");
 const usersRouter = require("./routes/users");
 const artistsRouter = require("./routes/artists");
 const genresRouter = require("./routes/genres");
@@ -25,12 +25,13 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://127.0.0.1:8080",
     credentials: true,
   })
 );
 app.use(helmet());
 app.post("/login", createToken);
+app.get("/logout", delToken)
 app.post("/create-user", createUser);
 
 app.use(checkToken);

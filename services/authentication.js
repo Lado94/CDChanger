@@ -22,12 +22,29 @@ const createToken = async (req, res, next) => {
     if (!user) {
       return next(new HttpError("Couldn't find user", 404));
     }
-    if (!bcrypt.compare(password, user.password)) {
+    const equal = await bcrypt.compare(password, user.password);
+    if (!equal) {
       return next(new HttpError("Password incorrect", 404));
     }
     const token = jwt.sign(user.name, secretKey);
-    res.cookie("Ticket", token);
-    res.status(200).json({ message: "Logged in successfully" });
+    res.cookie("Ticket", token, { expires: new Date(Date.now() + 90000000), httpOnly: true, secure: true,
+      sameSite: 'none' });
+    res
+      .status(200)
+      .json({
+        userId: user.id,
+        userName: user.name,
+        message: `${user.name} logged in successfully`,
+      });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const delToken = async (req, res) => {
+  try {
+    res.cookie("Ticket", "");
+    res.status(200).json({ error: 0, message: "Logged out successfully" });
   } catch (err) {
     next(err);
   }
@@ -38,7 +55,7 @@ const checkToken = async (req, res, next) => {
     const token = req.cookies.Ticket;
     if (token) {
       jwt.verify(token, secretKey, (err, res) => {
-        if (err) next(err);
+        if (err) next(new HttpError("Wrong token", 401));
         else {
           console.log(res);
           next();
@@ -52,4 +69,4 @@ const checkToken = async (req, res, next) => {
   }
 };
 
-module.exports = { createToken, checkToken };
+module.exports = { createToken, checkToken, delToken };
