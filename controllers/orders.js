@@ -4,42 +4,48 @@ const CompactDisk = require("../models/CompactDisk");
 const User = require("../models/User");
 const Artist = require("../models/Artist");
 
-exports.makeOrder = async (req, res) => {
+exports.updateOrder = async (req, res) => {
   try {
-    const { userId, items } = req.body;
+    const { orderId } = req.params; // Получаем ID заказа из параметров
+    const { items } = req.body;     // Получаем новые данные из тела запроса
 
-    const user = await User.findByPk(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    const order = await Order.findByPk(orderId);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
     }
 
     let totalPrice = 0;
-    const orderItems = [];
+    const updatedItems = [];
 
     for (const item of items) {
       const compactDisk = await CompactDisk.findByPk(item.cdId);
       if (!compactDisk) {
-        return res
-          .status(404)
-          .json({ message: `CompactDisk with id ${item.cdId} not found` });
+        return res.status(404).json({ message: `CompactDisk with id ${item.cdId} not found` });
       }
       totalPrice += compactDisk.price * item.quantity;
-      orderItems.push({
+      updatedItems.push({
+        cdId: item.cdId,
+        quantity: item.quantity,
+      });
+    }
+
+    // Удаляем старые записи деталей заказа
+    await OrderDetail.destroy({ where: { OrderId: orderId } });
+
+    // Добавляем новые детали заказа
+    for (const item of updatedItems) {
+      await OrderDetail.create({
+        OrderId: order.id,
         CompactDiskId: item.cdId,
         quantity: item.quantity,
       });
     }
-    const newOrder = await Order.create({ totalPrice, UserId: userId });
 
-    for (const item of orderItems) {
-      await OrderDetail.create({
-        OrderId: newOrder.id,
-        CompactDiskId: item.CompactDiskId,
-        quantity: item.quantity,
-      });
-    }
+    // Обновляем общую стоимость заказа
+    order.totalPrice = totalPrice;
+    await order.save();
 
-    res.status(201).json(newOrder);
+    res.status(200).json(order);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -95,9 +101,7 @@ exports.createOrder = async (req, res) => {
     for (const item of items) {
       const compactDisk = await CompactDisk.findByPk(item.cdId);
       if (!compactDisk) {
-        return res
-          .status(404)
-          .json({ message: `CompactDisk with id ${item.cdId} not found` });
+        return res.status(404).json({ message: `CompactDisk with id ${item.cdId} not found` });
       }
       totalPrice += compactDisk.price * item.quantity;
       orderItems.push({
@@ -110,8 +114,8 @@ exports.createOrder = async (req, res) => {
 
     for (const item of orderItems) {
       await OrderDetail.create({
-        orderId: newOrder.id,
-        cdId: item.cdId,
+        OrderId: newOrder.id,
+        CompactDiskId: item.cdId,
         quantity: item.quantity,
       });
     }
@@ -170,7 +174,7 @@ exports.deleteOrder = async (req, res) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    await OrderDetail.destroy({ where: { orderId: id } });
+    await OrderDetail.destroy({ where: { OrderId: id } });
     await order.destroy();
     res.status(200).json({ message: "Order deleted successfully" });
   } catch (error) {
